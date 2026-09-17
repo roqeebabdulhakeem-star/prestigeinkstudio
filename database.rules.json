@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "bookings": {
+      "$bookingId": {
+        ".read": false,
+        ".write": "!data.exists() && newData.exists() || data.exists() && newData.exists()",
+        ".validate": "newData.hasChildren(['bookingReference','firstName','lastName','email','phone','style','placement','size','date','time','depositUsd','description','paymentMethod','createdAt','status'])",
+        "firstName": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 100" },
+        "lastName": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 100" },
+        "email": { ".validate": "newData.isString() && newData.val().length <= 254" },
+        "phone": { ".validate": "newData.isString() && newData.val().length <= 50" },
+        "depositUsd": { ".validate": "newData.isNumber() && (newData.val() == 100 || newData.val() == 200 || newData.val() == 400)" },
+        "paymentMethod": { ".validate": "newData.isString() && (newData.val() == 'Apple Card' || newData.val() == 'Wire Transfer' || newData.val() == 'Bitcoin')" },
+        "bookingReference": { ".validate": "newData.isString() && newData.val() == $bookingId" }
+      }
+    }
+  }
+}

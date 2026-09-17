@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /bookingImages/{imageId} {
+      allow create: if request.resource.data.bookingReference is string
+        && request.resource.data.bookingReference.size() > 0
+        && request.resource.data.type is string
+        && request.resource.data.type.size() > 0
+        && request.resource.data.dataUrl is string
+        && request.resource.data.dataUrl.size() <= 900000
+        && request.resource.data.contentType == 'image/jpeg';
+      allow read, update, delete: if false;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+// Firebase Storage is no longer used by the Prestige Ink booking site.
+// Images are compressed in the browser and stored in Firestore.
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
